@@ -11,8 +11,10 @@ public class FriperController : MonoBehaviour {
     //弾いた時の傾き
     private float flickAngle = -20;
 
+    //初期の左画面の状態
     private bool isLButtonDown = false;
 
+    //初期の右画面の状態
     private bool isRButtonDown = false;
 
     // Use this for initialization
@@ -27,27 +29,49 @@ public class FriperController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //右矢印キーを押したとき左フリッパーを動かす
+        //左画面を押したとき左フリッパーを動かす
         if (this.isLButtonDown == true && tag == "LeftFripperTag")
         {
             SetAngle(this.flickAngle);
         }
-        //右矢印キーを押したとき右フリッパーを動かす
+        //右画面を押したとき右フリッパーを動かす
         if(this.isRButtonDown == true && tag == "RightFripperTag")
         {
             SetAngle(this.flickAngle);
         }
 
-        //矢印キーが離されたときフリッパーをもとに戻す
+        //左画面から離したときフリッパーをもとに戻す
         if(this.isLButtonDown == false && tag == "LeftFripperTag")
         {
             SetAngle(this.defaultAngle);
         }
+        //右画面から離したときフリッパーをもとに戻す
         if(this.isRButtonDown == false && tag == "RightFripperTag")
         {
             SetAngle(this.defaultAngle);
         }
+        
+        //左矢印キーを押されたら左画面を押されたことにする
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            this.isLButtonDown = true;
+        }
+        //右矢印キーが押されたら右画面を押されたことにする
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            this.isRButtonDown = true;
+        }
 
+        //左矢印キーが離されたら左画面を離したことにする
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            this.isLButtonDown = false;
+        }
+        //右矢印キーが離されたら右画面を離したことにする
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            this.isRButtonDown = false;
+        }
     }
 
     //フリッパーの傾きを設定
@@ -58,23 +82,23 @@ public class FriperController : MonoBehaviour {
         this.myHingeJoint.spring = jointSpr;
     }
 
-    //左ボタンを押し続けた場合の処理（追加）
+    //左ボタンを押し続けた場合の処理
     public void GetMyLeftButtonDown()
     {
         this.isLButtonDown = true;
     }
-    //左ボタンを離した場合の処理（追加）
+    //左ボタンを離した場合の処理
     public void GetMyLeftButtonUp()
     {
         this.isLButtonDown = false;
     }
 
-    //右ボタンを押し続けた場合の処理（追加）
+    //右ボタンを押し続けた場合の処理
     public void GetMyRightButtonDown()
     {
         this.isRButtonDown = true;
     }
-    //右ボタンを離した場合の処理（追加）
+    //右ボタンを離した場合の処理
     public void GetMyRightButtonUp()
     {
         this.isRButtonDown = false;
